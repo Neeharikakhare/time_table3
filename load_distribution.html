@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Load Distribution Data Entry</title>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --secondary: #3b82f6;
+            --bg: #f8fafc;
+            --border: #cbd5e1;
+            --text: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg);
+            color: var(--text);
+        }
+
+        .header-container {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container h1 {
+            margin: 0 0 10px 0;
+            color: var(--primary);
+        }
+
+        .header-container p {
+            margin: 5px 0;
+            color: #475569;
+            font-size: 14px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: var(--primary);
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-section {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        .form-section h3 {
+            margin-top: 0;
+            font-size: 14px;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 13px;
+            color: #334155;
+        }
+
+        input,
+        select {
+            padding: 8px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        .calc-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .calc-total {
+            background-color: #e2e8f0;
+            font-weight: bold;
+            cursor: not-allowed;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #2563eb;
+        }
+
+        .btn-export {
+            background: #16a34a;
+        }
+
+        .btn-export:hover {
+            background: #15803d;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1500px;
+            font-size: 13px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid var(--border);
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .col-center {
+            text-align: center;
+        }
+
+        .delete-btn {
+            background: #ef4444;
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+
+        .delete-btn:hover {
+            background: #dc2626;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header-container">
+        <h1>SAGE EDUCATION VERTICAL</h1>
+        <p><b>Institute Name:</b> Institute of Management studies &nbsp;|&nbsp; <b>Department Name:</b> MBA CLAS</p>
+        <p><b>Form No.:</b> SGI/ACAD/FORM/006a &nbsp;|&nbsp; <b>Ref. No.:</b> SGI/ACAD/SoP/006a</p>
+    </div>
+
+    <div class="card">
+        <h2>Enter Faculty Load Record</h2>
+
+        <div class="form-grid">
+            <div class="form-group"><label>Name of Faculty</label><input type="text" id="fac-name"
+                    placeholder="e.g., Dr. Ritu Shrivastava"></div>
+            <div class="form-group">
+                <label>Faculty Category</label>
+                <select id="fac-category">
+                    <option value="Prof & Head">Prof & Head</option>
+                    <option value="Prof">Prof</option>
+                    <option value="Assoc Prof">Assoc Prof</option>
+                    <option value="Asst Prof">Asst Prof</option>
+                </select>
+            </div>
+            <div class="form-group"><label>Sub. Code</label><input type="text" id="sub-code" placeholder="e.g., CS-405">
+            </div>
+            <div class="form-group"><label>Subject Name</label><input type="text" id="sub-name"
+                    placeholder="e.g., OPERATING SYSTEM"></div>
+            <div class="form-group"><label>Program / Branch</label><input type="text" id="prog-branch"
+                    placeholder="e.g., B.tech/CSE"></div>
+            <div class="form-group"><label>Section</label><input type="text" id="section" placeholder="e.g., A"></div>
+            <div class="form-group">
+                <label>UG / PG / DIP</label>
+                <select id="level">
+                    <option value="UG">UG</option>
+                    <option value="PG">PG</option>
+                    <option value="DIP">DIP</option>
+                </select>
+            </div>
+            <div class="form-group"><label>Sem</label><input type="text" id="sem" placeholder="e.g., 4th"></div>
+            <div class="form-group"><label>No. of Students</label><input type="number" id="students"></div>
+        </div>
+
+        <div class="form-grid">
+            <div class="form-section">
+                <h3>Teaching Load Credit</h3>
+                <div class="calc-row">
+                    <div class="form-group"><label>T (Theory)</label><input type="number" id="cred-t" value="0"
+                            oninput="calcTotals()"></div>
+                    <div class="form-group"><label>P (Practical)</label><input type="number" id="cred-p" value="0"
+                            oninput="calcTotals()"></div>
+                    <div class="form-group"><label>N (NTCC)</label><input type="number" id="cred-n" value="0"
+                            oninput="calcTotals()"></div>
+                    <div class="form-group"><label>Total</label><input type="number" id="cred-tot" class="calc-total"
+                            readonly></div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Teaching Load Credit Hrs</h3>
+                <div class="calc-row">
+                    <div class="form-group"><label>T (Theory)</label><input type="number" id="hrs-t" value="0"
+                            oninput="calcTotals()"></div>
+                    <div class="form-group"><label>P (Practical)</label><input type="number" id="hrs-p" value="0"
+                            oninput="calcTotals()"></div>
+                    <div class="form-group"><label>N (NTCC)</label><input type="number" id="hrs-n" value="0"
+                            oninput="calcTotals()"></div>
+                    <div class="form-group"><label>Total</label><input type="number" id="hrs-tot" class="calc-total"
+                            readonly></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-grid">
+            <div class="form-group"><label>Total Load (Weekly)</label><input type="number" id="weekly-load"
+                    placeholder="Total hours per week"></div>
+            <div class="form-group"><label>Other Responsibilities 1</label><input type="text" id="resp-1"
+                    placeholder="e.g., Dean and HOD"></div>
+            <div class="form-group"><label>Other Responsibilities 2</label><input type="text" id="resp-2"
+                    placeholder="e.g., SAC & Event"></div>
+            <div class="form-group"><label>Other Responsibilities 3</label><input type="text" id="resp-3"
+                    placeholder="e.g., Discipline"></div>
+        </div>
+
+        <div class="button-group">
+            <button onclick="addEntry()">Add Entry to List</button>
+            <button class="btn-export" onclick="exportToCSV()">Download as Excel/CSV</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Compiled Data</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>S.No.</th>
+                        <th>Name of Faculty</th>
+                        <th>Category</th>
+                        <th>Code</th>
+                        <th>Subject Name</th>
+                        <th>Branch</th>
+                        <th>Sec</th>
+                        <th>Level</th>
+                        <th>Sem</th>
+                        <th>Students</th>
+                        <th class="col-center" colspan="4" style="background:#020617;">Load Credits (T | P | N | Tot)
+                        </th>
+                        <th class="col-center" colspan="4" style="background:#0f172a;">Load Hrs (T | P | N | Tot)</th>
+                        <th>Weekly Load</th>
+                        <th>Resp 1</th>
+                        <th>Resp 2</th>
+                        <th>Resp 3</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="data-table-body">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let entries = [];
+        let serialCounter = 1;
+
+        function calcTotals() {
+            // Calculate Credits Total
+            let cT = parseFloat(document.getElementById('cred-t').value) || 0;
+            let cP = parseFloat(document.getElementById('cred-p').value) || 0;
+            let cN = parseFloat(document.getElementById('cred-n').value) || 0;
+            document.getElementById('cred-tot').value = cT + cP + cN;
+
+            // Calculate Hours Total
+            let hT = parseFloat(document.getElementById('hrs-t').value) || 0;
+            let hP = parseFloat(document.getElementById('hrs-p').value) || 0;
+            let hN = parseFloat(document.getElementById('hrs-n').value) || 0;
+            document.getElementById('hrs-tot').value = hT + hP + hN;
+        }
+
+        function addEntry() {
+            const entry = {
+                sno: serialCounter++,
+                facName: document.getElementById('fac-name').value,
+                category: document.getElementById('fac-category').value,
+                subCode: document.getElementById('sub-code').value,
+                subName: document.getElementById('sub-name').value,
+                branch: document.getElementById('prog-branch').value,
+                section: document.getElementById('section').value,
+                level: document.getElementById('level').value,
+                sem: document.getElementById('sem').value,
+                students: document.getElementById('students').value,
+
+                cT: document.getElementById('cred-t').value || 0,
+                cP: document.getElementById('cred-p').value || 0,
+                cN: document.getElementById('cred-n').value || 0,
+                cTot: document.getElementById('cred-tot').value || 0,
+
+                hT: document.getElementById('hrs-t').value || 0,
+                hP: document.getElementById('hrs-p').value || 0,
+                hN: document.getElementById('hrs-n').value || 0,
+                hTot: document.getElementById('hrs-tot').value || 0,
+
+                weeklyLoad: document.getElementById('weekly-load').value,
+                resp1: document.getElementById('resp-1').value,
+                resp2: document.getElementById('resp-2').value,
+                resp3: document.getElementById('resp-3').value,
+            };
+
+            if (!entry.facName || !entry.subCode) {
+                alert("Please at least fill the Faculty Name and Subject Code.");
+                return;
+            }
+
+            entries.push(entry);
+            renderTable();
+
+            // Clear inputs for next entry but keep faculty name to speed up data entry for the same teacher
+            document.getElementById('sub-code').value = '';
+            document.getElementById('sub-name').value = '';
+            document.getElementById('section').value = '';
+            document.getElementById('cred-t').value = '0';
+            document.getElementById('cred-p').value = '0';
+            document.getElementById('cred-n').value = '0';
+            document.getElementById('hrs-t').value = '0';
+            document.getElementById('hrs-p').value = '0';
+            document.getElementById('hrs-n').value = '0';
+            calcTotals();
+        }
+
+        function deleteEntry(index) {
+            entries.splice(index, 1);
+            // Recalculate S.No.
+            serialCounter = 1;
+            entries.forEach(e => e.sno = serialCounter++);
+            renderTable();
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('data-table-body');
+            tbody.innerHTML = '';
+
+            entries.forEach((e, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${e.sno}</td>
+                    <td>${e.facName}</td>
+                    <td>${e.category}</td>
+                    <td>${e.subCode}</td>
+                    <td>${e.subName}</td>
+                    <td>${e.branch}</td>
+                    <td>${e.section}</td>
+                    <td>${e.level}</td>
+                    <td>${e.sem}</td>
+                    <td>${e.students}</td>
+                    
+                    <td class="col-center">${e.cT || ''}</td>
+                    <td class="col-center">${e.cP || ''}</td>
+                    <td class="col-center">${e.cN || ''}</td>
+                    <td class="col-center" style="font-weight:bold">${e.cTot || ''}</td>
+                    
+                    <td class="col-center">${e.hT || ''}</td>
+                    <td class="col-center">${e.hP || ''}</td>
+                    <td class="col-center">${e.hN || ''}</td>
+                    <td class="col-center" style="font-weight:bold">${e.hTot || ''}</td>
+                    
+                    <td class="col-center">${e.weeklyLoad}</td>
+                    <td>${e.resp1}</td>
+                    <td>${e.resp2}</td>
+                    <td>${e.resp3}</td>
+                    <td><button class="delete-btn" onclick="deleteEntry(${index})">Remove</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function exportToCSV() {
+            if (entries.length === 0) {
+                alert("No data to export!");
+                return;
+            }
+
+            // Creating the exact headers from your uploaded file format
+            let csvContent = "data:text/csv;charset=utf-8,";
+
+            // Header metadata
+            csvContent += "SAGE EDUCATION VERTICAL,,,,,,,,,,,,,,,,,,,,,\r\n";
+            csvContent += ",,,,,,,,,,,,,,,,,,,,,\r\n";
+            csvContent += "Institute Name: Institute of Management studies,,,,Department Name: MBA CLAS,,,,Form No.: SGI/ACAD/FORM/006a,,,,,,,Ref. No.: SGI/ACAD/SoP/006a,,,,,,\r\n";
+
+            // Main Column Headers
+            csvContent += "S. No.,Name of Faculty,Faculty Category,Sub. Code,Subject Name,Program / Branch,Section,UG / PG / DIP,Sem,No. of Students,Teaching Load Credit,,,,Teaching Load Credit Hrs,,,,TOTAL LOAD (Weekly),Other Responsibilities,,\r\n";
+
+            // Sub Headers
+            csvContent += ",,,,,,,,,,T,P,N,Total,T,P,N,Total,,1,2,3\r\n";
+
+            // Row Data
+            entries.forEach(e => {
+                let row = [
+                    e.sno,
+                    `"${e.facName}"`,
+                    `"${e.category}"`,
+                    `"${e.subCode}"`,
+                    `"${e.subName}"`,
+                    `"${e.branch}"`,
+                    `"${e.section}"`,
+                    `"${e.level}"`,
+                    `"${e.sem}"`,
+                    e.students,
+                    e.cT || "", e.cP || "", e.cN || "", e.cTot || "",
+                    e.hT || "", e.hP || "", e.hN || "", e.hTot || "",
+                    e.weeklyLoad || "",
+                    `"${e.resp1}"`, `"${e.resp2}"`, `"${e.resp3}"`
+                ];
+                csvContent += row.join(",") + "\r\n";
+            });
+
+            // Create a download link and trigger it
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "Faculty_Load_Distribution.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+
+</html>
